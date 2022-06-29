@@ -4,20 +4,20 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, getProducts } from "../../redux/apiCalls";
+import { deleteMovie, getMovies } from "../../redux/apiCalls";
 
  
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const movies = useSelector((state) => state.movie.movies);
 
   useEffect(() => {
-    getProducts(dispatch)
+    getMovies(dispatch)
   }, [dispatch])
 
   const handleDelete = (id) => {
-    deleteProduct(id , dispatch);
+    deleteMovie(id , dispatch);
   };
 
   const columns = [
@@ -48,7 +48,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row._id}>
+            <Link to={"/movie/" + params.row._id}>
               <button className="productListEdit">Editer</button>
             </Link>
             <DeleteOutline
@@ -64,7 +64,7 @@ export default function ProductList() {
   return (
     <div className="productList">
       <DataGrid
-        rows={products}
+        rows={movies}
         disableSelectionOnClick
         columns={columns}
         getRowId= {(row) => row._id}

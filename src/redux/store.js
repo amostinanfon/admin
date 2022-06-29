@@ -1,5 +1,5 @@
 import { combineReducers, configureStore, } from "@reduxjs/toolkit";
-import productReducer from "./productRedux";
+import movieReducer from "./movieRedux";
 import userReducer from "./userRedux";
 import {
     persistStore,
@@ -20,13 +20,13 @@ const persistConfig = {
 }
 
 
-const rootReducer = combineReducers({ user: userReducer , product: productReducer })
+const rootReducer = combineReducers({ user: userReducer , movie: movieReducer })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: {
-        product: productReducer,
+        movie: movieReducer,
         user: persistedReducer,
     },
     middleware: (getDefaultMiddleware) =>

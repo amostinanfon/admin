@@ -53,7 +53,7 @@ export default function Home() {
       <FeaturedInfo />
       <Chart 
         data={userStats}
-        title="Utilisateur :Données Analyses" 
+        title="Utilisateur : Données Analyses" 
         grid 
         dataKey="Active User"/>
       <div className="homeWidgets">

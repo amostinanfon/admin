@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const BASE_URL = "http://localhost:5000/api/"
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWQ3MjhjM2U2NWQyODE4YmQ4MTcxYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MzAzNjcwMywiZXhwIjoyNTE3MDM2NzAzfQ._ejSoSdGtbG-TgT15WrUKJddhfrKQzjsvdcEz9S6H-A"
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQxNDBiM2U5NTk3MGMwMDgwZWFjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NTk5Mzc1NiwiZXhwIjoyNTE5OTkzNzU2fQ.6AMdUux3LDgvMDUNOgcFdYHV3KxcCr_ro2mf3fYZo78"
 //const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken
 
 //console.log(JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.accessToken)

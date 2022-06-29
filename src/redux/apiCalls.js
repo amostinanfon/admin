@@ -1,17 +1,17 @@
 import { publicRequest, userRequest } from '../requestMethods';
-import { addProductFailure, 
-         addProductStart, 
-         addProductSuccess, 
-         deleteProductFailure, 
-         deleteProductStart, 
-         deleteProductSuccess, 
-         getProductFailure, 
-         getProductStart, 
-         getProductSuccess, 
-         updateProductFailure, 
-         updateProductStart, 
-         updateProductSuccess 
-    } from './productRedux';
+import { addMovieFailure, 
+         addMovieStart, 
+         addMovieSuccess, 
+         deleteMovieFailure, 
+         deleteMovieStart, 
+         deleteMovieSuccess, 
+         getMovieFailure, 
+         getMovieStart, 
+         getMovieSuccess, 
+         updateMovieFailure, 
+         updateMovieStart, 
+         updateMovieSuccess 
+    } from './movieRedux';
 
 import { loginStart , 
          loginFailure ,
@@ -38,43 +38,43 @@ export const login = async (dispatch, user) =>{
 
 
 
-export const getProducts = async (dispatch) =>{
-    dispatch(getProductStart());
+export const getMovies = async (dispatch) =>{
+    dispatch(getMovieStart());
     try {
-        const res = await publicRequest.get("/products")
-        dispatch(getProductSuccess(res.data))
+        const res = await publicRequest.get("/movies")
+        dispatch(getMovieSuccess(res.data))
     } catch (error) {
-        dispatch(getProductFailure())
+        dispatch(getMovieFailure())
     }
 }
 
-export const deleteProduct = async (id , dispatch) =>{
-    dispatch(deleteProductStart());
+export const deleteMovie = async (id , dispatch) =>{
+    dispatch(deleteMovieStart());
     try {
-        const res = await userRequest.delete(`/products/${id}`)
-        dispatch(deleteProductSuccess(id && res.data))
+        const res = await userRequest.delete(`/movies/${id}`)
+        dispatch(deleteMovieSuccess(id && res.data))
     } catch (error) {
-        dispatch(deleteProductFailure())
+        dispatch(deleteMovieFailure())
     }
 }
-export const updateProduct = async (id , product , dispatch) =>{
-    dispatch(updateProductStart());
+export const updateMovie = async (id , movie , dispatch) =>{
+    dispatch(updateMovieStart());
     try {
-         dispatch(updateProductSuccess(
-            { id , product }
+         dispatch(updateMovieSuccess(
+            { id , movie }
         ))
     } catch (error) {
-        dispatch(updateProductFailure())
+        dispatch(updateMovieFailure())
     }
 }
 
-export const addProduct = async (product, dispatch) =>{
-    dispatch(addProductStart());
+export const addMovie = async (movie, dispatch) =>{
+    dispatch(addMovieStart());
     try {
-        const res = await userRequest.post("/products", product)
-    dispatch(addProductSuccess(res.data));
+        const res = await userRequest.post("/movie", movie)
+    dispatch(addMovieSuccess(res.data));
     } catch (error) {
-    dispatch(addProductFailure())
+    dispatch(addMovieFailure())
     }
 }
 
@@ -91,7 +91,12 @@ export const deleteUser = async (id,dispatch) =>{
     dispatch(deleteUserStart());
     try {
         //const res = await userRequest.get("/users");
-    dispatch(deleteUserSuccess(id));
+    //dispatch(deleteUserSuccess(id));
+
+        const res = await userRequest.delete(`/users/${id}`)
+        dispatch(deleteUserSuccess(id && res.data))
+   
+    
     } catch (error) {
     dispatch(deleteUserFailure());
     }

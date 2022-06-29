@@ -3,7 +3,7 @@ import "./newProduct.css";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../firebase";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/apiCalls";
+import { addMovie } from "../../redux/apiCalls";
 
 
 export default function NewProduct() {
@@ -62,8 +62,8 @@ uploadTask.on('state_changed',
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      const product = {...inputs, img:downloadURL, categories:cat};
-      addProduct(product, dispatch);
+      const movie = {...inputs, img:downloadURL, categories:cat};
+      addMovie(movie, dispatch);
     });
   }
 );
