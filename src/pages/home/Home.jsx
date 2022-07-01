@@ -50,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="home">
-      <FeaturedInfo />
+     <FeaturedInfo />
       <Chart 
         data={userStats}
         title="Utilisateur : Données Analyses" 

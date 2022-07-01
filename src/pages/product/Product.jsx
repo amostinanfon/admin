@@ -12,11 +12,11 @@ import { userRequest } from "../../requestMethods";
 export default function Product() {
 
     const location = useLocation();
-    const productId = location.pathname.split("/")[2];
+    const movieId = location.pathname.split("/")[2];
     const [pStats, setPStats] = useState([]);
 
-    const product = useSelector((state) => 
-        state.product.products.find((product) => product._id === productId)
+    const movie = useSelector((state) => 
+        state.movie.movie.find((movie) => movie._id === movieId)
     )
 
     
@@ -41,7 +41,7 @@ export default function Product() {
   useEffect(() => {
     const getStats = async () => {
       try {
-            const res = await userRequest.get("/orders/income?pid=" + productId);
+            const res = await userRequest.get("/orders/income?pid=" + movieId);
 
           console.log(res.data);
           const list = res.data.sort((a,b) => {
@@ -61,7 +61,7 @@ export default function Product() {
     }
     getStats()
 
-  }, [productId,MONTHS])
+  }, [movieId,MONTHS])
 
 
   //console.log(pStats)
@@ -81,15 +81,15 @@ export default function Product() {
           <div className="productTopRight">
               <div className="productInfoTop">
                   <img 
-                    src={product.img}
+                    src={movie.img}
                     alt="" 
                     className="productInfoImg" 
                 />
-                  <span className="productName">{ product.title }</span>
+                  <span className="productName">{ movie.title }</span>
               </div>
               <div className="productInfoBottom">
                   <div className="productInfoItem">
-                      <span className="productInfoKey">{product._id}:</span>
+                      <span className="productInfoKey">{movie._id}:</span>
                       <span className="productInfoValue">123</span>
                   </div>
                   <div className="productInfoItem">
@@ -98,7 +98,7 @@ export default function Product() {
                   </div>
                   <div className="productInfoItem">
                       <span className="productInfoKey">en stock:</span>
-                      <span className="productInfoValue">{product.inStock}</span>
+                      <span className="productInfoValue">{}</span>
                   </div>
               </div>
           </div>
@@ -107,11 +107,11 @@ export default function Product() {
           <form className="productForm">
               <div className="productFormLeft">
                   <label>Nom du produit</label>
-                  <input type="text" placeholder={product.title} />
+                  <input type="text" placeholder={movie.title} />
                   <label>Description du produit</label>
-                  <input type="text" placeholder={product.title} />
+                  <input type="text" placeholder={movie.title} />
                   <label>Price</label>
-                  <input type="text" placeholder={product.price} />
+                  <input type="text" placeholder={movie.price} />
                   <label>En Stock</label>
                   <select name="inStock" id="idStock">
                       <option value="true">Oui</option>
@@ -120,7 +120,7 @@ export default function Product() {
               </div>
               <div className="productFormRight">
                   <div className="productUpload">
-                      <img src={product.img} alt=""/>
+                      <img src={movie.img} alt=""/>
                       <label for="file">
                           <Publish/>
                       </label>

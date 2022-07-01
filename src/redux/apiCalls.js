@@ -41,7 +41,7 @@ export const login = async (dispatch, user) =>{
 export const getMovies = async (dispatch) =>{
     dispatch(getMovieStart());
     try {
-        const res = await publicRequest.get("/movies")
+        const res = await userRequest.get("/movies")
         dispatch(getMovieSuccess(res.data))
     } catch (error) {
         dispatch(getMovieFailure())

@@ -38,13 +38,13 @@ const admin = "is_Admin"
               <Route path="/newUser">
                 <NewUser />
               </Route>
-              <Route path="/products">
+              <Route path="/movies">
                 <ProductList />
               </Route>
-              <Route path="/product/:productId">
+              <Route path="/movie/:movieId">
                 <Product />
-              </Route>
-              <Route path="/newproduct">
+              </Route> 
+              <Route path="/newmovie">
                 <NewProduct />
               </Route>
             </div>

@@ -19,7 +19,7 @@ const movieSlice = createSlice({
         },
         getMovieSuccess:(state,action) =>{
             state.isFetching = false;
-            state.movie= action.payload
+            state.movies = action.payload
         },
         getMovieFailure:(state) =>{
             state.isFetching = false;

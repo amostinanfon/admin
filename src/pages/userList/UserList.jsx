@@ -14,7 +14,7 @@ export default function UserList() {
   const dispatch = useDispatch();
   //const users = useSelector((state) => state.user.user.currentUser);
 
-  const users = useSelector(state => state.user.user.userList)
+  const users = useSelector(state => state.user.user.currentUser)
 
   console.log(users)
 
@@ -31,7 +31,7 @@ export default function UserList() {
     { field: "_id", headerName: "ID", width: 90 },
     {
       field: "user",
-      headerName: "User",
+      headerName: "Utilisateur",
       width: 200,
       renderCell: (params) => {
         return (

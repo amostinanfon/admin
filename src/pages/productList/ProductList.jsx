@@ -6,11 +6,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteMovie, getMovies } from "../../redux/apiCalls";
 
- 
+
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const movies = useSelector((state) => state.movie.movies);
+  const movie= useSelector((state) => state.movie.movies);
+
+
+  //const movies= useSelector((state) => state.movie.movie);
+  console.log(movie);
+
 
   useEffect(() => {
     getMovies(dispatch)
@@ -23,8 +28,8 @@ export default function ProductList() {
   const columns = [
     { field: "_id", headerName: "ID", width: 220 },
     {
-      field: "product",
-      headerName: "Product",
+      field: "movie",
+      headerName: "Movies",
       width: 200,
       renderCell: (params) => {
         return (
@@ -35,15 +40,10 @@ export default function ProductList() {
         );
       },
     },
-    { field: "inStock", headerName: "Stock", width:300},
+    { field: "series", headerName: "isSeries", width:300},
     {
-      field: "price",
-      headerName: "Price",
-      width: 160,
-    },
-    {
-      field: "action",
-      headerName: "Action",
+      field: "genre",
+      headerName: "genre",
       width: 150,
       renderCell: (params) => {
         return (
@@ -64,7 +64,7 @@ export default function ProductList() {
   return (
     <div className="productList">
       <DataGrid
-        rows={movies}
+        rows={movie?movie:1}
         disableSelectionOnClick
         columns={columns}
         getRowId= {(row) => row._id}
