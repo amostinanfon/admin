@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, } from "@reduxjs/toolkit";
 import movieReducer from "./movieRedux";
 import userReducer from "./userRedux";
+import listReducer from './listRedux';
 import {
     persistStore,
     persistReducer,
@@ -20,7 +21,7 @@ const persistConfig = {
 }
 
 
-const rootReducer = combineReducers({ user: userReducer , movie: movieReducer })
+const rootReducer = combineReducers({ user: userReducer , movie: movieReducer , list: listReducer})
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -28,6 +29,7 @@ export const store = configureStore({
     reducer: {
         movie: movieReducer,
         user: persistedReducer,
+        list: listReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

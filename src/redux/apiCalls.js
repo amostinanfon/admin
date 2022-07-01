@@ -25,6 +25,21 @@ import { loginStart ,
     } from './userRedux';
 
 
+import { 
+    getListStart, 
+    getListSuccess, 
+    getListFailure ,
+    // deleteListStart , 
+    // deleteListFailure , 
+    // deleteListSuccess ,
+    // updateListStart , 
+    // updateListFailure , 
+    // updateListSuccess,
+    // addListStart , 
+    // addListFailure , 
+    // addListSuccess,
+
+} from './listRedux.js'
 
 export const login = async (dispatch, user) =>{
     dispatch(loginStart());
@@ -99,5 +114,15 @@ export const deleteUser = async (id,dispatch) =>{
     
     } catch (error) {
     dispatch(deleteUserFailure());
+    }
+}
+
+export const getLists = async (dispatch) => {
+    dispatch(getListStart());
+    try {
+        const res = await userRequest.get("/lists");
+        dispatch(getListSuccess(res.data))
+    } catch (error) {
+        dispatch(getListFailure())
     }
 }

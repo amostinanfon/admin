@@ -10,6 +10,8 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
+import List from "./pages/list/List";
+import ListList from "./pages/listList/ListList.jsx";
 
 function App() {
 
@@ -46,6 +48,12 @@ const admin = "is_Admin"
               </Route> 
               <Route path="/newmovie">
                 <NewProduct />
+              </Route>
+              <Route path="/lists">
+                <ListList />
+              </Route>
+              <Route path="/list/:listId">
+                <List />
               </Route>
             </div>
           </>

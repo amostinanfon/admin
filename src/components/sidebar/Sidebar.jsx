@@ -47,16 +47,18 @@ export default function Sidebar() {
                 Utilisateurs
               </li>
             </Link>
-            <Link to="/products" className="link">
+            <Link to="/movies" className="link">
               <li className="sidebarListItem">
                 <PlayCircleOutlineOutlined className="sidebarIcon" />
                 Films
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <List className="sidebarIcon" />
-              Lists
-            </li>
+            <Link to='/lists' className="link">
+              <li className="sidebarListItem">
+                <List className="sidebarIcon" />
+                Lists
+              </li>
+            </Link>
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
               Rapports
@@ -72,7 +74,7 @@ export default function Sidebar() {
             </li>
             <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              Feedback | Retour Info
+              Feedback
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />

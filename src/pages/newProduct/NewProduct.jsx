@@ -1,46 +1,40 @@
 import { useState } from "react";
 import "./newProduct.css";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import app from "../../firebase";
+//import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from '../../firebase';
 import { useDispatch } from "react-redux";
 import { addMovie } from "../../redux/apiCalls";
 
 
 export default function NewProduct() {
 
-
-  const [ inputs , setInputs ] = useState({});
-  const [ file , setFile ] = useState(null);
-  const [ cat , setCat ] = useState([]);
+  const [ movie , setMovie ] = useState(null);
+  const [ img , setImg ] = useState(null);
+  const [ imgTItle , setImgTitle ] = useState(null);
+  const [ imgSm , setImgSm ] = useState(null);
+  const [ trailer , setTrailer ] = useState(null);
+  const [ video , setVideo ] = useState(null);
+  const [ uploaded , setUploaded ] = useState(0);
+  
   const dispatch = useDispatch()
 
 
   const handleChange = (e) => {
-    setInputs(prev => {
+    setMovie(prev => {
       return {...prev, [e.target.name]: e.target.value}
     })
   }
 
-  const handleCat = (e) => {
-    setCat(e.target.value.split(","));
-  }
+  const upload = (items) => {
+    items.forEach(item => {
+      const fileName = new Date().getTime() + item.label + item.file.name
+      const uploadTask = storage.ref(`/item/${fileName}`).put(item);
 
-  console.log(cat);
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, fileName);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-
-
-uploadTask.on('state_changed', 
+      uploadTask.on('state_changed', 
   (snapshot) => {
     
-    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    const progress = 
+    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log('Upload is ' + progress + '% done');
     switch (snapshot.state) {
       case 'paused':
@@ -54,17 +48,33 @@ uploadTask.on('state_changed',
   }, 
   (error) => {
     // Handle unsuccessful uploads
+    console.log(error)
   }, 
   () => {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      const movie = {...inputs, img:downloadURL, categories:cat};
-      addMovie(movie, dispatch);
+    uploadTask.snapshot.ref.getDownloadURL.then((url) => {
+      setMovie ((prev) => {
+        return { ...prev, [item.label]: url};
+      });
+      setUploaded((prev) => prev + 1);
+      //addMovie(movie, dispatch);
     });
+   }
+  )}
+)}
+
+  const handleUpload = (e) => {
+    e.prevemtDefault();
+    upload([
+      {file: img, label: "img"},
+      {file: imgTItle, label: "imgTitle"},
+      {file: imgSm, label: "imgSm"},
+      {file: trailer, label: "trailer"},
+      {file: video, label: "video"},
+    ])
   }
-);
-  }
+
 
   return (
     <div className="newProduct">
@@ -74,17 +84,24 @@ uploadTask.on('state_changed',
           <label>Image</label>
           <input 
             type="file" 
-            id="file" 
-            onChange={e => setFile(e.target.files[0])}
+            name="img" 
+            onChange={e => setImg(e.target.files[0])}
         />
         </div>
         <div className="addProductItem">
-          <label>Titre</label>
+          <label>Titre image</label>
           <input
-            name="title" 
-            type="text" 
-            placeholder="Apple Airpods" 
-            onChange={handleChange} 
+            name="imgsm" 
+            type="file" 
+            onChange={e => e.target.files[0]} 
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Titre image</label>
+          <input
+            name="imgsm" 
+            type="file" 
+            onChange={e => e.target.files[0]} 
           />
         </div>
         <div className="addProductItem">
@@ -97,36 +114,65 @@ uploadTask.on('state_changed',
           />
         </div>
         <div className="addProductItem">
-          <label>Prix</label>
+          <label>Year</label>
           <input
-            name="price" 
-            type="number" 
-            placeholder="100" 
+            name="year" 
+            type="text" 
+            placeholder="Year" 
             onChange={handleChange} 
           />
         </div>
         <div className="addProductItem">
-          <label>Categories</label>
+          <label>Genre</label>
           <input
-            //name="text" 
+            name="genre" 
             type="text" 
-            placeholder="jeans , jupes" 
-            onChange={handleCat}
+            placeholder="Genre" 
+            onChange={e => e.target.value}
           />
         </div>
         <div className="addProductItem">
-          <label>En Stock</label>
+          <label>Trailer</label>
+          <input
+            name="trailer"
+            type="file" 
+            onChange={(e) => setTrailer(e.target.files[0])}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Video</label>
+          <input
+            name="video"
+            type="file" 
+            onChange={(e) => setVideo(e.target.files[0])}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Limit</label>
+          <input
+            name="duration"
+            type="text" 
+            placeholder="Duration" 
+            onChange={handleChange}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Is Series?</label>
           <select 
-            name="inStock" 
+            name="isSeries" 
             onChange={handleChange}
           >
             <option value="true">Oui</option>
             <option value="false">Non</option>
           </select>
         </div>
-        <button
-          onClick={handleClick} 
-          className="addProductButton">Créer</button>
+        {
+          uploaded === 5 ? (
+            <button className="addProductButton">Créer</button>
+          ) : (
+            <button className="addProductButton" onClick={handleUpload}>Upload</button>
+          )
+        }
       </form>
     </div>
   );

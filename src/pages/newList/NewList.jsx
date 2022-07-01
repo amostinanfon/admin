@@ -1,83 +1,36 @@
 import { useState } from "react";
-import "./newProduct.css";
+import "./newlist.css";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from "../../firebase";
 import { useDispatch } from "react-redux";
 import { addMovie } from "../../redux/apiCalls";
 
 
-export default function NewProduct() {
+export default function NewList() {
 
 
-  const [ inputs , setInputs ] = useState({});
-  const [ file , setFile ] = useState(null);
-  const [ cat , setCat ] = useState([]);
+  //const [ inputs , setInputs ] = useState({});
+  const [ list , setList ] = useState(null);
+  //const [ cat , setCat ] = useState([]);
   const dispatch = useDispatch()
 
 
   const handleChange = (e) => {
-    setInputs(prev => {
-      return {...prev, [e.target.name]: e.target.value}
-    })
+    setList(
+       {...list, [e.target.name]: e.target.value});
   }
 
-  const handleCat = (e) => {
-    setCat(e.target.value.split(","));
-  }
-
-  console.log(cat);
-
-  const handleClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
-    const storage = getStorage(app);
-    const storageRef = ref(storage, fileName);
 
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-
-
-uploadTask.on('state_changed', 
-  (snapshot) => {
-    
-    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-    switch (snapshot.state) {
-      case 'paused':
-        console.log('Upload is paused');
-        break;
-      case 'running':
-        console.log('Upload is running');
-        break;
-      default:
-    }
-  }, 
-  (error) => {
-    // Handle unsuccessful uploads
-  }, 
-  () => {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      const movie = {...inputs, img:downloadURL, categories:cat};
-      addMovie(movie, dispatch);
-    });
   }
-);
-  }
+
 
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">Nouveau Produit</h1>
       <form className="addProductForm">
-        <div className="addProductItem">
-          <label>Image</label>
-          <input 
-            type="file" 
-            id="file" 
-            onChange={e => setFile(e.target.files[0])}
-        />
-        </div>
+        
         <div className="addProductItem">
           <label>Titre</label>
           <input
@@ -88,44 +41,30 @@ uploadTask.on('state_changed',
           />
         </div>
         <div className="addProductItem">
-          <label>Description</label>
+          <label>Genre</label>
           <input
-            name="desc"  
+            name="genre"  
             type="text" 
-            placeholder="Description . . ." 
+            placeholder="genre . . ." 
             onChange={handleChange} 
           />
         </div>
         <div className="addProductItem">
-          <label>Prix</label>
-          <input
-            name="price" 
-            type="number" 
-            placeholder="100" 
-            onChange={handleChange} 
-          />
+          <label>Type</label>
+          <select name="type" onChange={handleChange}>
+            <option value='movies'>Movies</option>
+            <option value='series'>Series</option>
+          </select>
         </div>
         <div className="addProductItem">
-          <label>Categories</label>
-          <input
-            //name="text" 
-            type="text" 
-            placeholder="jeans , jupes" 
-            onChange={handleCat}
-          />
-        </div>
-        <div className="addProductItem">
-          <label>En Stock</label>
-          <select 
-            name="inStock" 
-            onChange={handleChange}
-          >
-            <option value="true">Oui</option>
-            <option value="false">Non</option>
+          <label>Content</label>
+          <select name="type" onChange={handleChange}>
+            <option value='movies'>Movies</option>
+            <option value='series'>Series</option>
           </select>
         </div>
         <button
-          onClick={handleClick} 
+          onClick={handleSubmit} 
           className="addProductButton">Créer</button>
       </form>
     </div>
