@@ -11,7 +11,8 @@ import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
 import List from "./pages/list/List";
-import ListList from "./pages/listList/ListList.jsx";
+import ListList from "./pages/listList/ListList";
+import NewList from './pages/newList/NewList'
 
 function App() {
 
@@ -54,6 +55,9 @@ const admin = "is_Admin"
               </Route>
               <Route path="/list/:listId">
                 <List />
+              </Route>
+              <Route path="/newlist">
+                <NewList />
               </Route>
             </div>
           </>

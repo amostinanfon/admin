@@ -7,13 +7,14 @@ export default function List() {
 
     const location = useLocation();
     const list = location.list;
+    console.log(list);
 
 
   return (
     <div className="product">
       <div className="productTitleContainer">
         <h1 className="productTitle">List</h1>
-        <Link to="/newList">
+        <Link to="/newlist">
           <button className="productAddButton">Créer</button>
         </Link>
       </div>
